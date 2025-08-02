@@ -25,29 +25,24 @@ connectDB();
 
 // Initialize the express app
 const app = express();
-
-// Middleware to parse JSON bodies from requests
 app.use(express.json());
 
 const allowedOrigins = [
-  'http://localhost:5173', // Your local frontend for development
-  process.env.FRONTEND_URL, // vercel live link of frontend
-  'https://invsys-frontend.vercel.app/' // 
+  'http://localhost:5173',
+  'https://invsys-frontend.vercel.app'
 ];
-
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(null, true);
   },
   credentials: true
 }));
+
 
 // Api Definition...
 
