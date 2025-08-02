@@ -31,7 +31,8 @@ app.use(express.json());
 
 const allowedOrigins = [
   'http://localhost:5173', // Your local frontend for development
-  process.env.FRONTEND_URL // vercel live link of frontend
+  process.env.FRONTEND_URL, // vercel live link of frontend
+  'https://invsys-frontend.vercel.app/' // 
 ];
 
 
